@@ -91,18 +91,31 @@ return {
         config = function()
             local install = require("nvim-treesitter.install")
 
-            -- Компиляторы по платформе
             if is_windows then
-                install.compilers   = { "gcc", "zig" }
+                install.compilers = { "gcc", "zig" }
             elseif is_mac then
-                install.compilers   = { "clang", "gcc" }
+                install.compilers = { "clang", "gcc" }
             else
-                install.compilers   = { "gcc", "clang" }
+                install.compilers = { "gcc", "clang" }
             end
 
             install.prefer_git = true
 
-            require("nvim-treesitter.config").setup({
+            -- Определяем какой модуль доступен в этой версии
+            local ok_new, ts_new = pcall(require, "nvim-treesitter.config")
+            local ok_old, ts_old = pcall(require, "nvim-treesitter.configs")
+
+            local ts_setup
+            if ok_new then
+                ts_setup = ts_new
+            elseif ok_old then
+                ts_setup = ts_old
+            else
+                vim.notify("nvim-treesitter: модуль не найден", vim.log.levels.ERROR)
+                return
+            end
+
+            ts_setup.setup({
                 ensure_installed = {
                     "lua", "python", "javascript",
                     "typescript", "html", "css",
