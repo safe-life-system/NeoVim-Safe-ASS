@@ -313,20 +313,49 @@ return {
         "hrsh7th/nvim-cmp",
         dependencies = {
             "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-buffer",   -- слова из открытых файлов
+            "hrsh7th/cmp-path",     -- пути к файлам
+            "hrsh7th/cmp-cmdline",  -- дополнение в командной строке nvim
+            -- сниппеты
+            "L3MON4D3/LuaSnip",
+            "saadparwaiz1/cmp_luasnip",
+            -- дополнение для установленных библиотек python/js
+            "hrsh7th/cmp-nvim-lsp-signature-help",
         },
         config = function()
-            local cmp = require("cmp")
+            local cmp     = require("cmp")
+            local luasnip = require("luasnip")
 
             cmp.setup({
+                snippet = {
+                    expand = function(args)
+                        luasnip.lsp_expand(args.body)
+                    end,
+                },
                 mapping = cmp.mapping.preset.insert({
                     ["<Tab>"]   = cmp.mapping.select_next_item(),
                     ["<S-Tab>"] = cmp.mapping.select_prev_item(),
                     ["<CR>"]    = cmp.mapping.confirm({ select = true }),
                     ["<C-e>"]   = cmp.mapping.abort(),
+                    ["<C-Space>"] = cmp.mapping.complete(), -- принудительно вызвать дополнение
                 }),
-                sources = {
-                    { name = "nvim_lsp" },
-                },
+                sources = cmp.config.sources({
+                    { name = "nvim_lsp" },                  -- главный источник — LSP
+                    { name = "nvim_lsp_signature_help" },   -- подсказки параметров функций
+                    { name = "luasnip" },                   -- сниппеты
+                }, {
+                    { name = "buffer" },                    -- слова из текущего файла
+                    { name = "path" },                      -- пути
+                }),
+            })
+
+            -- Дополнение в командной строке nvim
+            cmp.setup.cmdline(":", {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = cmp.config.sources({
+                    { name = "path" },
+                    { name = "cmdline" },
+                }),
             })
         end,
     },
