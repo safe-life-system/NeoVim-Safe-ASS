@@ -103,6 +103,45 @@ return {
             })
         end,
     },
+    -- ─────────────────────────────────────────────
+    -- Вкладки (Bufferline)
+    -- ─────────────────────────────────────────────
+    {
+        "akinsho/bufferline.nvim",
+        version = "*",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        lazy = false,
+        config = function()
+            require("bufferline").setup({
+                options = {
+                    mode                    = "buffers", -- каждый файл = вкладка как в VS Code
+                    numbers                 = "none",
+                    close_command           = "bdelete! %d",
+                    right_mouse_command     = "bdelete! %d",
+                    left_mouse_command      = "buffer %d",
+                    show_close_icon         = true,
+                    show_buffer_close_icons = true,
+                    separator_style         = "slant",
+                    always_show_bufferline  = true,
+                    -- не показывать neo-tree как вкладку
+                    offsets = {
+                        {
+                            filetype   = "neo-tree",
+                            text       = "📁 Файлы",
+                            highlight  = "Directory",
+                            separator  = true,
+                        },
+                    },
+                },
+            })
+
+            -- Переключение между вкладками
+            vim.keymap.set("n", "<Tab>",      ":BufferLineCycleNext<CR>", { desc = "➡️ Следующая вкладка" })
+            vim.keymap.set("n", "<S-Tab>",    ":BufferLineCyclePrev<CR>", { desc = "⬅️ Предыдущая вкладка" })
+            -- Закрыть текущую вкладку
+            vim.keymap.set("n", "<leader>x",  ":bdelete!<CR>",            { desc = "❌ Закрыть вкладку" })
+        end,
+    },
 
     -- ─────────────────────────────────────────────
     -- Подсветка синтаксиса (Treesitter)
