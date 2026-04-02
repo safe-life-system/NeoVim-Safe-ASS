@@ -102,7 +102,7 @@ return {
 
             install.prefer_git = true
 
-            require("nvim-treesitter.configs").setup({
+            require("nvim-treesitter.config").setup({
                 ensure_installed = {
                     "lua", "python", "javascript",
                     "typescript", "html", "css",
