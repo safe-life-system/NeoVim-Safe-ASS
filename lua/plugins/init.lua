@@ -76,6 +76,30 @@ return {
                     use_libuv_file_watcher = true,
                     filtered_items         = { hide_dotfiles = false },
                 },
+                window = {
+                    mappings = {
+                        -- Открыть файл (переходит в существующий буфер или создаёт новый)
+                        ["<cr>"] = "open",
+                        -- Создание файла
+                        ["a"] = {
+                            "add",
+                            config = { show_path = "relative" },
+                        },
+                        -- Создание папки
+                        ["A"] = {
+                            "add_directory",
+                            config = { show_path = "relative" },
+                        },
+                        -- Удалить
+                        ["d"] = "delete",
+                        -- Переименовать
+                        ["r"] = "rename",
+                        -- Копировать
+                        ["c"] = "copy",
+                        -- Переместить
+                        ["m"] = "move",
+                    },
+                },
             })
         end,
     },
