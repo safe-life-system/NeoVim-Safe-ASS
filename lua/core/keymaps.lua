@@ -4,7 +4,7 @@ vim.g.mapleader = " "
 -- сохранить
 keymap.set("n", "<leader>w", ":w<CR>",                    { desc = "💾 Сохранить файл" })
 -- выйти
-keymap.set("n", "<leader>q", ":q!<CR>",                    { desc = "❌ Выйти" })
+keymap.set("n", "<leader>q", ":q!!<CR>",                    { desc = "❌ Выйти" })
 -- открыть файловое дерево
 keymap.set("n", "<leader>e", ":Neotree toggle<CR>",        { desc = "📁 Файловое дерево" })
 -- сохранить и выйти
@@ -15,3 +15,6 @@ keymap.set("n", "<leader>f", ":Telescope find_files<CR>",  { desc = "🔍 Най
 keymap.set("n", "<leader>b", ":Telescope file_browser<CR>",{ desc = "📁 Открыть папку" })
 -- Поиск текста
 keymap.set("n", "<leader>g", ":Telescope live_grep<CR>",   { desc = "🔍 Найти текст" })
+-- Ctrl + Z
+keymap.set('n', '<C-z>', 'u', { desc = "Отмена действия в нормальном режиме" })
+keymap.set('i', '<C-z>', '<C-o>u', { desc = "Отмена действия в режиме вставки" })
