@@ -478,4 +478,14 @@ return {
             })
         end,
     },
+    {
+        "dstein64/nvim-scrollview",
+        config = function()
+            require("scrollview").setup({
+                -- настройки по умолчанию
+                excluded_filetypes = { "nerdtree", "neogitstatus" },
+                current_only = true, -- показывать только в активном окне
+            })
+        end,
+    },
 }
