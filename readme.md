@@ -15,4 +15,4 @@ Arch
 ``` :Lazy sync ```
 Дождитесь установки
 
-Более подробная информация на (сайте)[https://www.safe-life-site.ru/]
+Более подробная информация на сайте: https://www.safe-life-site.ru/
